@@ -11,4 +11,4 @@ puts "where whould you like to put your X?"
 
 
  @board.change_square(:a1, :computer)
-  puts @board.board
+  puts @board.squares

@@ -2,10 +2,10 @@
 ## Unbeatable Tic Tac Toe in Ruby
 
 class Board
-  attr_accessor :board, :board_description
+  attr_accessor :squares, :board_description
 
   def initialize
-    @board = {
+    @squares = {
       a1: "-", a2: "-", a3: "-",
       b1: "-", b2: "-", b3: "-",
       c1: "-", c2: "-", c3: "-"
@@ -32,11 +32,10 @@ class Board
   end
 
   def change_square(position, player)
-    binding.pry
-    if @board[position] == "-" && player == :computer
-      @board[position] = "x"
-    elsif @board[position] == "-" && player == :human
-      @board[position] = "o"
+    if @squares[position] == "-" && player == :computer
+      @squares[position] = "x"
+    elsif @squares[position] == "-" && player == :human
+      @squares[position] = "o"
     else
       return :occupied
     end
