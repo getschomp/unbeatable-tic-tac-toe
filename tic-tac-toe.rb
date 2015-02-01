@@ -5,6 +5,7 @@ require 'pry'
 require_relative 'board'
 
 class Game
+
   def play_game
     @board = Board.new
     write_directions
@@ -12,8 +13,8 @@ class Game
       player_goes
       sleep(1)
       computer_goes
-      if check_win != nil
-        puts check_win
+      if check_results != nil
+        puts check_results
         break
       end
     end
@@ -24,7 +25,7 @@ class Game
     puts @board.select_desc
   end
 
-  def check_win
+  def check_results
     results = []
     @board.winning_combos.each do |combo|
       combo.each do |square_key|
@@ -39,37 +40,47 @@ class Game
       end
       results = []
     end
+    check_draw
+  end
+
+  def check_draw
     unless @board.squares.has_value?("-")
       return "draw"
     end
   end
 
   def player_goes
-    loop do
       puts "where whould you like to put your X?"
       position = gets.chomp.to_sym
       if @board.squares.has_key?(position)
         @board.change_square(position, :human)
         puts @board.status
-        break
+      elsif @board.occupied?(position)
+        puts "that position is occupied"
+        write_directions
+        player_goes
       else
         puts "thats not a position on the board" +
         write_directions
+        player_goes
       end
     end
   end
 
   def computer_goes
     position = @board.squares.keys.sample
-    if @board.change_square(position, :computer) == :occupied
+    if @board.occupied?(position)
+      puts "that position is occupied"
       computer_goes
     else
       puts "The computer put an \"o\" on #{position}"
+      @board.change_square(position, :computer)
       puts @board.status
-    end
   end
 
 end
+
+
 
 @game = Game.new
 @game.play_game

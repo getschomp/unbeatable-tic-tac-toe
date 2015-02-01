@@ -50,4 +50,12 @@ class Board
     end
   end
 
+  def occupied?(position)
+    if @squares[position] == "x" || @squares[position] == "o"
+      return true
+    else
+      return false
+    end
+  end
+
 end
