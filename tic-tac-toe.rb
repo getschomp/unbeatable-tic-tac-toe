@@ -68,7 +68,21 @@ class Game
   end
 
   def computer_goes
-    position = @board.squares.keys.sample
+    # play the oppsite corner if oponent in corner
+    position = nil
+    if position == nil
+      if @board.squares[:a1] == "x"
+        @board.change_square(:c3, :computer)
+      elsif @board.squares[:a3] == "x"
+        @board.change_square(:c1, :computer)
+      elsif @board.squares[:c1] = "x"
+        @board.change_square(:a3, :computer)
+      elsif @board.squares[:c3] == "x"
+        position = :a1
+      else
+        position = @board.squares.keys.sample
+      end
+    end
     if @board.occupied?(position)
       puts "that position is occupied"
       computer_goes
